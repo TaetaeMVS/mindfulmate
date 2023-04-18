@@ -1,14 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QLabel, QMainWindow
+from mindfulmate_app import MindfulMateApp
 
-class MindfulMateApp(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.initUI()
-
-    def initUI(self):
-        self.setWindowTitle("Mindful Mate")
-        self.resize(800, 600)
 
 
 if __name__ == "__main__":
