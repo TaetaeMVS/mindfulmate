@@ -15,7 +15,7 @@ if __name__ == "__main__":
     window = MindfulMateApp()
 
     # Set the title of the main window
-    window.setWindowTitle("Hello, World!")
+    window.setWindowTitle("MindfulMate")
 
     # Set the size of the main window
     window.resize(1920, 1080)

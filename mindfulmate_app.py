@@ -40,8 +40,8 @@ class MindfulMateApp(QMainWindow):
         self.chat_box.setFontPointSize(16)
         
         # Show welcome message
-        self.chat_box.append("Welcome to Mindful Mate! Let's start the day with a positive attitude.")
-        self.chat_box.append("How are you feeling today? What do you want to accomplish?")
+        welcome_msg = self.initial_openai_response()
+        self.chat_box.append(f"Mindful Mate: {welcome_msg}")
         
     def send_message(self):
         user_message = self.input_box.text().strip()
@@ -62,5 +62,14 @@ class MindfulMateApp(QMainWindow):
             ]
         )
         return response
+    
+    def initial_openai_response(self):
+        response = openai.ChatCompletion.create(
+            model = "gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are Mindful Mate, a virtual wellbeing and lifestyle assistant. Please provide helpful answers while being thoughtful, kind and motivating. Give a short welcome to the user."},
+            ]
+        )
+        return response['choices'][0]['message']['content']
         
     
