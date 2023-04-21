@@ -4,8 +4,14 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QTextEdit, QLineEdit, QPu
 from PyQt6.QtCore import Qt
 import openai
 from userdata.user import User
-load_dotenv()
+import semantic_kernel as sk
+from semantic_kernel.ai.open_ai import OpenAITextCompletion
 
+kernel = sk.Kernel()
+api_key = sk.openai_settings_from_dot_env()
+kernel.config.add_text_backend("gt-3.5-turbo", OpenAITextCompletion("gpt-3.5-turbo", api_key))
+load_dotenv()
+useAzureOpenAI = False
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 class MindfulMateApp(QMainWindow):
