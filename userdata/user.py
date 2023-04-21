@@ -1,6 +1,7 @@
 # userdata/user.py
 from PyQt6.QtWidgets import QInputDialog
 import json
+import os
 class User:
     def __init__(self, name=None, age=None, occupation=None, interests=None):
         self.name = name
@@ -20,7 +21,7 @@ class User:
     def add_interest(self, interest):
         self.interests.append(interest)
         
-    def add_interests(self, interests):
+    def set_interests(self, interests):
         self.interests = interests
 
     def get_name(self):
@@ -60,17 +61,21 @@ class User:
         interests, ok = QInputDialog.getText(parent, 'Interests', 'Please enter your interests (comma-separated):')
         if ok:
             parent.user.interests = [interest.strip() for interest in interests.split(',')]
+        self.export_user_data()
 
     # Function to export user data3
     def export_user_data(self):
         with open('userdata/user_data.json', 'w') as outfile:
             json.dump(self.to_dict(), outfile)
             
-    # function to import user data
-    def import_user_data(self):
-        f = open('userdata/user_data.json', 'r')
-        self.set_age(f['age'])
-        self.set_name(f['name'])
-        self.set_occupation(f['occupation'])
-        self.set_interests(f['interests'])
-        
+    def load_user_data(self, parent):
+        # check if user_data.json file exists
+        if not os.path.exists('userdata/user_data.json'):
+            self.update_user(parent)
+            return
+        with open('userdata/user_data.json', 'r') as f:
+            data = json.load(f)
+            parent.user.set_age(data['age'])
+            parent.user.set_name(data['name'])
+            parent.user.set_occupation(data['occupation'])
+            parent.user.set_interests(data['interests'])

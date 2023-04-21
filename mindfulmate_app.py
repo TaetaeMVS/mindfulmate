@@ -42,9 +42,8 @@ class MindfulMateApp(QMainWindow):
         container.setLayout(layout)
         self.setCentralWidget(container)
         
-        # Check if user has been created
-        if self.user.name == None:
-            self.update_settings()
+        # Load user data
+        self.user.load_user_data(self)
         
         # Set font size 
         self.chat_box.setFontPointSize(16)
@@ -79,7 +78,7 @@ class MindfulMateApp(QMainWindow):
         response = openai.ChatCompletion.create(
             model = "gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are Mindful Mate, a virtual wellbeing and lifestyle assistant. Please provide helpful answers while being thoughtful, kind and motivating. Give a short welcome to the user."},
+                {"role": "system", "content": "You are Mindful Mate, a virtual wellbeing and lifestyle assistant. Please provide helpful answers while being thoughtful, kind and motivating. Give a short welcome to the user. You do not need to repeat information back to them, pretend you have known them for a while and you are a close friend who they can trust."},
                 {"role": "user", "content": f"My name is {self.user.name} and I am {self.user.age} years old. I am a {self.user.occupation} and I am interested in {self.user.interests}."}
             ]
         )
