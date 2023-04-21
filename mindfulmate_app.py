@@ -1,4 +1,3 @@
-import sys
 from dotenv import load_dotenv
 import os
 from PyQt6.QtWidgets import QApplication, QMainWindow, QTextEdit, QLineEdit, QPushButton, QVBoxLayout, QWidget, QInputDialog
