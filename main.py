@@ -1,11 +1,7 @@
 import sys
-import os
-from dotenv import load_dotenv
 from PyQt6.QtWidgets import QApplication, QLabel, QMainWindow
 from mindfulmate_app import MindfulMateApp
-import openai
-load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 if __name__ == "__main__":
     # Create a QApplication instance (required for any PyQt application)

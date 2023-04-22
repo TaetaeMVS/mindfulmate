@@ -8,9 +8,9 @@ import semantic_kernel as sk
 from semantic_kernel.ai.open_ai import OpenAITextCompletion
 
 kernel = sk.Kernel()
-api_key = sk.openai_settings_from_dot_env()
-kernel.config.add_text_backend("gt-3.5-turbo", OpenAITextCompletion("gpt-3.5-turbo", api_key))
 load_dotenv()
+api_key = sk.openai_settings_from_dot_env()
+kernel.config.add_text_backend("davinci-003", OpenAITextCompletion("text-davinci-003", api_key))
 useAzureOpenAI = False
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -50,11 +50,17 @@ class MindfulMateApp(QMainWindow):
         # Load user data
         self.user.load_user_data(self)
         
+        # Load skills
+        skills_directory = "./skills"
+        assistantFunctions = kernel.import_semantic_skill_from_directory(skills_directory, "assistant")
+        welcome_function = assistantFunctions["welcome"]
+        
         # Set font size 
         self.chat_box.setFontPointSize(16)
         
         # Show welcome message
-        welcome_msg = self.initial_openai_response()
+        # welcome_msg = self.initial_openai_response()
+        welcome_msg = welcome_function(self.user.to_dict())
         self.chat_box.append(f"Mindful Mate: {welcome_msg}")
         
     def send_message(self):
@@ -64,8 +70,8 @@ class MindfulMateApp(QMainWindow):
             self.input_box.clear()
             
             response = self.get_openai_response(user_message)
-            msg = response['Mindful Mate'][0]['message']['content']
-            self.chat_box.append(f"Carlitos: {msg}")
+            msg = response['choices'][0]['message']['content']
+            self.chat_box.append(f"Mindful Mate: {msg}")
             
     def get_openai_response(self, message):
         response = openai.ChatCompletion.create(
