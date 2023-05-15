@@ -1,7 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QLabel, QMainWindow
 from mindfulmate_app import MindfulMateApp
-
+# test
 
 if __name__ == "__main__":
     # Create a QApplication instance (required for any PyQt application)

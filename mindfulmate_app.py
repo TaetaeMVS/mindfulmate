@@ -84,6 +84,10 @@ class MindfulMateApp(QMainWindow):
         )
         return response
     
+    def update_settings(self):
+        self.user.update_user(self)
+    
+"""
     # You are Mindful Mate, a virtual wellbeing and lifestyle assistant. Please provide helpful answers while being thoughtful, kind and motivating. Give a short welcome to the user.
     def initial_openai_response(self):
         response = openai.ChatCompletion.create(
@@ -94,8 +98,6 @@ class MindfulMateApp(QMainWindow):
             ]
         )
         return response['choices'][0]['message']['content']
-        
-    def update_settings(self):
-        self.user.update_user(self)
+"""        
 
         
